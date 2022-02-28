@@ -8,11 +8,20 @@ var coodsGeneral = {
     lengthBarBoard: widthWindow - ((widthWindow * 0.03) * 2),
     spaceBetweenBars: (widthWindow - ((widthWindow * 0.03) * 2) - ((widthWindow * 0.07) * 2)) / 3
 };
-
-function getCalcHeightTotalElements() {
-    return document.getElementsByTagName("header")[0].offsetHeight +
-        document.getElementsByTagName("footer")[0].offsetHeight;
-}
+var spacesClickable = [];
+var currentPlayer = "X";
+var gameIsOver = false;
+var board = {
+    space1: null,
+    space2: null,
+    space3: null,
+    space4: null,
+    space5: null,
+    space6: null,
+    space7: null,
+    space8: null,
+    space9: null
+};
 
 (() => {
     window.addEventListener("resize", () => document.location.reload(true));
@@ -24,52 +33,28 @@ function inicializeCanvas() {
     let canvas = document.getElementsByTagName("canvas");
     canvas[0].width = coodsGeneral.maxPositonX;
     canvas[0].height = coodsGeneral.maxPositonY;
-    context = canvas[0].getContext("2d");
+    context = canvas[0].getContext("2d");    
+    canvas[0].addEventListener("click", onClickCanvas);
 }
 
-function createBoard() {
-    context.fillStyle = "#1F2737";
-    createBarsBoard(getCoodsBarByPosition(1, 'H'));
-    createBarsBoard(getCoodsBarByPosition(2, 'H'));
-    createBarsBoard(getCoodsBarByPosition(1, 'V'));
-    createBarsBoard(getCoodsBarByPosition(2, 'V'));
-}
-
-function createBarsBoard(pCoods) {
-    context.fillRect(pCoods.x, pCoods.y, pCoods.w, pCoods.h);
-}
-
-function getCoodsBarByPosition(pPosition, pOrientation) {
-    return {
-        x: getCalcCoordX(pPosition, pOrientation),
-        y: getCalcCoordY(pPosition, pOrientation),
-        w: getCalcCoordW(pOrientation),
-        h: getCalcCoordH(pOrientation)
-    }
-}
-
-function getCalcCoordX(pPosition, pOrientation) {
-    return pOrientation === 'H' ?
-        (coodsGeneral.spaceBetweenBars * pPosition) +
-        coodsGeneral.marginBorders +
-        (coodsGeneral.widthRectBoard * (pPosition - 1))
-        :
-        coodsGeneral.marginBorders;
-}
-
-function getCalcCoordY(pPosition, pOrientation) {
-    return pOrientation === 'H' ?
-        coodsGeneral.marginBorders
-        :
-        (coodsGeneral.spaceBetweenBars * pPosition) +
-        coodsGeneral.marginBorders +
-        (coodsGeneral.widthRectBoard * (pPosition - 1));
-}
-
-function getCalcCoordW(pOrientation) {
-    return pOrientation === 'H' ? coodsGeneral.widthRectBoard : coodsGeneral.lengthBarBoard;
-}
-
-function getCalcCoordH(pOrientation) {
-    return pOrientation === 'H' ? coodsGeneral.lengthBarBoard : coodsGeneral.widthRectBoard;
+function onClickCanvas(e) {
+    if(gameIsOver) { return; }
+    spacesClickable.forEach((space) => {
+        if(space.clicked(e.offsetX, e.offsetY)) {
+            space.setMove(currentPlayer);
+            board[`space${space.indexSpace}`] = currentPlayer;
+            let statusGame = isGameFinish();
+            console.log(board, statusGame);
+            if(statusGame.finish) {
+                if(statusGame.winner !== null) {
+                    console.log(`O VENCEDOR É ${statusGame.winner}`);
+                } else {
+                    console.log(`DEU VELHA! EMPATOU :(`);
+                }
+                gameIsOver = true;
+            } else {
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            }
+        }
+    });
 }
