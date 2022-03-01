@@ -1,5 +1,5 @@
 var context;
-var widthWindow = (window.innerWidth > window.innerHeight - getCalcHeightTotalElements() ? window.innerHeight - getCalcHeightTotalElements() : window.innerWidth) * 0.8;
+var widthWindow = (window.innerWidth - getCalcWidthTotalElements() > window.innerHeight - getCalcHeightTotalElements() ? window.innerHeight - getCalcHeightTotalElements() : window.innerWidth - getCalcWidthTotalElements()) * 0.8;
 var coodsGeneral = {
     maxPositonX: widthWindow,
     maxPositonY: widthWindow,
