@@ -40,11 +40,11 @@ function inicializeCanvas() {
 function onClickCanvas(e) {
     if(gameIsOver) { return; }
     spacesClickable.forEach((space) => {
-        if(space.clicked(e.offsetX, e.offsetY)) {
-            space.setMove(currentPlayer);
+        if(space.clicked(e.offsetX, e.offsetY)) {        
+            if(board[`space${space.indexSpace}`] !== null) { return; }
+            space.setMove(currentPlayer, space.indexSpace);
             board[`space${space.indexSpace}`] = currentPlayer;
             let statusGame = isGameFinish();
-            console.log(board, statusGame);
             if(statusGame.finish) {
                 if(statusGame.winner !== null) {
                     console.log(`O VENCEDOR É ${statusGame.winner}`);

@@ -46,8 +46,8 @@ function createSpaceClickable(pCoods) {
         }
         return true;
     }
-    this.setMove = function(pPlayer) {
-        setMoveOnBoard(pPlayer);
+    this.setMove = function(pPlayer, pSpaceIndex) {
+        setMoveOnBoard(pPlayer, pSpaceIndex);
     }
 }
 
@@ -56,11 +56,49 @@ function getCoodsSpacesClickableByPosition(pPosition) {
         i: pPosition,
         x: getSpaceCoordX(pPosition),
         y: getSpaceCoordY(pPosition),
-        w: getSpaceCoordW(pPosition),
-        h: getSpaceCoordH(pPosition)
+        w: getSpaceCoordW(),
+        h: getSpaceCoordH()
     }
 }
 
-function setMoveOnBoard(pPlayer) {
-    console.log(pPlayer);
+function setMoveOnBoard(pPlayer, pSpaceIndex) {
+    if(pPlayer === 'X') {
+        createX(pSpaceIndex);
+    } else {
+        createO(pSpaceIndex);
+    }
+}
+
+function createX(pSpaceIndex) {
+    let angle = 45;
+    let rotation = angle * Math.PI / 180;
+    let coods = getCoodsMoveX(getCoodsSpacesClickableByPosition(pSpaceIndex));
+
+    context.fillStyle = "blue";
+
+    context.translate(coods.x + coods.w/2, coods.y + coods.h/2);
+    context.rotate(rotation);
+    context.fillRect(-coods.w/2, -coods.h/2, coods.w, coods.h);
+    context.rotate(-rotation);
+    context.translate(-coods.x - coods.w/2, -coods.y - coods.h/2);
+
+    context.translate(coods.x + coods.w/2, coods.y + coods.h/2);
+    context.rotate(-rotation);
+    context.fillRect(-coods.w/2, -coods.h/2, coods.w, coods.h);
+    context.rotate(rotation);
+    context.translate(-coods.x - coods.w/2, -coods.y - coods.h/2);
+}
+
+function createO(pSpaceIndex) {
+    let coods = getCoodsMoveO(getCoodsSpacesClickableByPosition(pSpaceIndex));
+    
+    context.beginPath();
+    context.fillStyle = "red";
+    context.arc(coods.x, coods.y, coods.radius, coods.startAngle, coods.endAngle);
+    context.fill();
+
+    context.beginPath();
+    context.fillStyle = "#B6C0D3";
+    context.arc(coods.x, coods.y, (coods.radius - (coods.radius * 0.5)), coods.startAngle, coods.endAngle);
+    context.fill();
 }
