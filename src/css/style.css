@@ -4,6 +4,7 @@ header {
     color: floralwhite;
     text-align: center;
     margin-bottom: 5px;
+    min-width: 380px;
 }
 
 footer {
@@ -12,12 +13,13 @@ footer {
     color: azure;
     text-align: end;
     margin-top: 5px;
+    min-width: 380px;
 }
 
 main {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
 }
 
 canvas {
@@ -27,13 +29,69 @@ canvas {
 aside {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
     text-align: center;
     padding: 1%;
     margin-left: 5px;
     border: 1px solid white;
 }
 
+aside div {
+    margin-bottom: 10px;
+}
+
 h1, h3 {
     margin: 0px;
 }
+
+ul {
+    font-family: 'Lucida Sans Regular', Verdana, sans-serif;
+    font-size: small;
+    height: 200px;
+    overflow: auto;
+    margin: 5px 0px 0px 10px;
+    padding-left: 20px;
+    padding-right: 10px;
+    list-style: none;
+}
+
+.detalhe-titulo {
+    color: dimgrey;
+    font-size: larger;
+    display: inline;
+    margin-right: 5px;
+}
+
+.turno {
+    font-family: 'Lucida Sans Regular', Verdana, sans-serif;
+    font-weight: 900;
+}
+
+.placar {
+    display: block;
+    margin: 5px;
+    font-family: 'Lucida Sans Regular', Verdana, sans-serif;
+}
+
+@media screen and (max-width: 600px) {
+    aside {
+        margin-top: 10px;
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    aside div {
+        width: 50%;
+    }
+
+    aside > div div {
+        width: 100%;
+    }
+
+    .detalhe {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+  }
