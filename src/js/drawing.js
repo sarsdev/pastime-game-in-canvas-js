@@ -6,15 +6,10 @@ function createBoard() {
     createBarsBoard(getCoodsBarByPosition(1, 'V'));
     createBarsBoard(getCoodsBarByPosition(2, 'V'));
     
-    spacesClickable.push(new createSpaceClickable(getCoodsSpacesClickableByPosition(1)));
-    spacesClickable.push(new createSpaceClickable(getCoodsSpacesClickableByPosition(2)));
-    spacesClickable.push(new createSpaceClickable(getCoodsSpacesClickableByPosition(3)));
-    spacesClickable.push(new createSpaceClickable(getCoodsSpacesClickableByPosition(4)));
-    spacesClickable.push(new createSpaceClickable(getCoodsSpacesClickableByPosition(5)));
-    spacesClickable.push(new createSpaceClickable(getCoodsSpacesClickableByPosition(6)));
-    spacesClickable.push(new createSpaceClickable(getCoodsSpacesClickableByPosition(7)));
-    spacesClickable.push(new createSpaceClickable(getCoodsSpacesClickableByPosition(8)));
-    spacesClickable.push(new createSpaceClickable(getCoodsSpacesClickableByPosition(9)));
+    spacesClickable = [];
+    for (let index = 1; index < 10; index++) {
+        spacesClickable.push(new createSpaceClickable(getCoodsSpacesClickableByPosition(index)));        
+    }
 }
 
 function createBarsBoard(pCoods) {

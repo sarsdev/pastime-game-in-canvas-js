@@ -20,7 +20,32 @@ var board = {
     space6: null,
     space7: null,
     space8: null,
-    space9: null
+    space9: null,
+    checkCombinations: function(space1, space2, space3) {
+        if(space1 !== null && space2 !== null && space3 !== null && space1 === space2 && space1 === space3) {
+            return true;
+        }
+        return false;
+    },
+    noMatches: function() {
+        if (this.space1 !== null && this.space2 !== null && this.space3 !== null &&
+            this.space4 !== null && this.space5 !== null && this.space6 !== null &&
+            this.space7 !== null && this.space8 !== null && this.space9 !== null) {
+            return true;
+        }
+        return false;
+    },
+    inicializeValues: function() {
+        this.space1 = null;
+        this.space2 = null;
+        this.space3 = null;
+        this.space4 = null;
+        this.space5 = null;
+        this.space6 = null;
+        this.space7 = null;
+        this.space8 = null;
+        this.space9 = null;
+    }
 };
 var turno = document.querySelector(".turno");
 var scorePlayerX = 0;
@@ -47,31 +72,38 @@ function inicializeCanvas() {
 }
 
 function onClickCanvas(e) {
-    spacesClickable.forEach((space) => {
-        if(space.clicked(e.offsetX, e.offsetY)) {        
-            if(board[`space${space.indexSpace}`] !== null) { return; }
-            space.setMove(currentPlayer, space.indexSpace);
-            board[`space${space.indexSpace}`] = currentPlayer;
-            let statusGame = isGameFinish();
-            if(statusGame.finish) {
-                if(statusGame.winner !== null) {
-                    setScore(statusGame.winner);
-                } else {
-                    setScore(null);
-                }
-                clearBoard();
-            } else {
-                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-                turno.textContent = `Jogador ${currentPlayer}`;
-                turno.style.color = currentPlayer === 'X' ? 'blue' : 'red';
-            }
-        }
+    let spaceClicked = getSpaceClicked(e);
+    if(board[`space${spaceClicked.indexSpace}`] !== null) return;
+    spaceClicked.setMove(currentPlayer, spaceClicked.indexSpace);
+    board[`space${spaceClicked.indexSpace}`] = currentPlayer;
+    let statusGame = isGameFinish();
+    if(!statusGame.finish) {
+        currentPlayer = updateCurrentPlayer();
+        updateTurno(currentPlayer);
+        return;
+    }
+    setScore(statusGame.winner);
+    clearBoard();
+}
+
+function updateCurrentPlayer() {
+    return currentPlayer === 'X' ? 'O' : 'X';
+}
+
+function updateTurno(currentPlayer) {
+    turno.textContent = `Jogador ${currentPlayer}`;
+    turno.style.color = currentPlayer === 'X' ? 'blue' : 'red';
+}
+
+function getSpaceClicked(e) {  
+    let spaces = spacesClickable.filter((space) => {
+        return space.clicked(e.offsetX, e.offsetY);
     });
+    return spaces[0];
 }
 
 function inicializeDetails() {
-    turno.textContent = `Jogador ${currentPlayer}`;
-    turno.style.color = 'blue';
+    updateTurno(currentPlayer);
     scoreX.textContent = `Jogador X: ${scorePlayerX}`;
     scoreO.textContent = `Jogador O: ${scorePlayerO}`;
     draw.textContent = `Empates: ${scoreDraw}`;
@@ -81,37 +113,26 @@ function setScore(pWinner) {
     if(pWinner === 'X') {
         scorePlayerX++;
         scoreX.textContent = `Jogador X: ${scorePlayerX}`;
-        let nodeLi = document.createElement("li");
-        nodeLi.appendChild(document.createTextNode("Jogador X ganhou"));
-        historic.appendChild(nodeLi);
+        addNewHistoric("Jogador X ganhou");
     } else if(pWinner === 'O') {
         scorePlayerO++;
         scoreO.textContent = `Jogador O: ${scorePlayerO}`;
-        let nodeLi = document.createElement("li");
-        nodeLi.appendChild(document.createTextNode("Jogador O ganhou"));
-        historic.appendChild(nodeLi);
+        addNewHistoric("Jogador O ganhou");
     } else {
         scoreDraw++;
         draw.textContent = `Empates: ${scoreDraw}`;
-        let nodeLi = document.createElement("li");
-        nodeLi.appendChild(document.createTextNode("Empate"));
-        historic.appendChild(nodeLi);
+        addNewHistoric("Empate");
     }
 }
 
+function addNewHistoric(text) {
+    let nodeLi = document.createElement("li");
+    nodeLi.appendChild(document.createTextNode(text));
+    historic.appendChild(nodeLi);
+}
+
 function clearBoard() {
-    board = {
-        space1: null,
-        space2: null,
-        space3: null,
-        space4: null,
-        space5: null,
-        space6: null,
-        space7: null,
-        space8: null,
-        space9: null
-    };
-    spacesClickable = [];
+    board.inicializeValues();
     currentPlayer = "X";
     createBoard();
 }
