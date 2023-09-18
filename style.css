@@ -33,12 +33,6 @@
         text-align: end;
         min-width: 380px;
     }
-    
-    iframe {
-        width: 75dvw;
-        height: 75dvh;
-        border: none;
-    }
 }
 
 @media screen and (max-width: 600px) {

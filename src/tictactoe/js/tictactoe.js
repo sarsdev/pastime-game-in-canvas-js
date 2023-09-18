@@ -1,14 +1,14 @@
 var context;
-var widthWindow = (window.innerWidth > window.innerHeight ? window.innerHeight : window.innerWidth) * .9;
-widthWindow = widthWindow < 360 ? 360 : widthWindow;
-var coodsGeneral = {
-    maxPositonX: widthWindow,
-    maxPositonY: widthWindow,
-    marginBorders: widthWindow * 0.03,
-    widthRectBoard: widthWindow * 0.07,
-    lengthBarBoard: widthWindow - ((widthWindow * 0.03) * 2),
-    spaceBetweenBars: (widthWindow - ((widthWindow * 0.03) * 2) - ((widthWindow * 0.07) * 2)) / 3
-};
+var widthWindow;
+var coodsGeneral;
+var turno;
+var scorePlayerX;
+var scoreX;
+var scorePlayerO;
+var scoreO;
+var scoreDraw;
+var draw;
+var historic;
 var spacesClickable = [];
 var currentPlayer = "X";
 var board = {
@@ -47,28 +47,40 @@ var board = {
         this.space9 = null;
     }
 };
-var turno = document.querySelector(".turno");
-var scorePlayerX = 0;
-var scoreX = document.querySelector("#placarX");
-var scorePlayerO = 0;
-var scoreO = document.querySelector("#placarO");
-var scoreDraw = 0;
-var draw = document.querySelector("#placarEmpate");
-var historic = document.querySelector("ul");
 
-(() => {
+function StartTicTacToeGame() {
     window.addEventListener("resize", () => document.location.reload(true));
     inicializeCanvas();
     inicializeDetails();
     createBoard();
-})();
+}
 
 function inicializeCanvas() {
+    widthWindow = (window.innerWidth - getCalcWidthTotalElements() > window.innerHeight - getCalcHeightTotalElements() ? window.innerHeight - getCalcHeightTotalElements() : window.innerWidth - getCalcWidthTotalElements()) * 0.8;
+    widthWindow = widthWindow < 360 ? 360 : widthWindow;
+    coodsGeneral = {
+        maxPositonX: widthWindow,
+        maxPositonY: widthWindow,
+        marginBorders: widthWindow * 0.03,
+        widthRectBoard: widthWindow * 0.07,
+        lengthBarBoard: widthWindow - ((widthWindow * 0.03) * 2),
+        spaceBetweenBars: (widthWindow - ((widthWindow * 0.03) * 2) - ((widthWindow * 0.07) * 2)) / 3
+    };
+
     let canvas = document.getElementsByTagName("canvas");
     canvas[0].width = coodsGeneral.maxPositonX;
     canvas[0].height = coodsGeneral.maxPositonY;
     context = canvas[0].getContext("2d");    
     canvas[0].addEventListener("click", onClickCanvas);
+
+    turno = document.querySelector(".turno");
+    scorePlayerX = 0;
+    scoreX = document.querySelector("#placarX");
+    scorePlayerO = 0;
+    scoreO = document.querySelector("#placarO");
+    scoreDraw = 0;
+    draw = document.querySelector("#placarEmpate");
+    historic = document.querySelector("ul");
 }
 
 function onClickCanvas(e) {

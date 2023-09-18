@@ -1,3 +1,12 @@
+function getCalcHeightTotalElements() {
+    return document.getElementsByTagName("header")[0].offsetHeight +
+        document.getElementsByTagName("footer")[0].offsetHeight;
+}
+
+function getCalcWidthTotalElements() {
+    return document.getElementsByTagName("aside")[0].offsetWidth;
+}
+
 function getCalcCoordX(pPosition, pOrientation) {
     return pOrientation === 'H' ?
         (coodsGeneral.spaceBetweenBars * pPosition) + coodsGeneral.marginBorders + (coodsGeneral.widthRectBoard * (pPosition - 1))
