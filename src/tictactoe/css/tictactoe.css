@@ -4,7 +4,7 @@ main {
     justify-content: space-around;
 }
 
-canvas {
+#canvas-tictactoe {
     background-color: #B6C0D3;
 }
 

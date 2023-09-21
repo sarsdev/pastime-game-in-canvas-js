@@ -50,12 +50,12 @@ var board = {
 
 function StartTicTacToeGame() {
     window.addEventListener("resize", () => document.location.reload(true));
-    inicializeCanvas();
+    inicializeCanvasTicTacToe();
     inicializeDetails();
     createBoard();
 }
 
-function inicializeCanvas() {
+function inicializeCanvasTicTacToe() {
     widthWindow = (window.innerWidth - getCalcWidthTotalElements() > window.innerHeight - getCalcHeightTotalElements() ? window.innerHeight - getCalcHeightTotalElements() : window.innerWidth - getCalcWidthTotalElements()) * 0.8;
     widthWindow = widthWindow < 360 ? 360 : widthWindow;
     coodsGeneral = {
@@ -67,11 +67,11 @@ function inicializeCanvas() {
         spaceBetweenBars: (widthWindow - ((widthWindow * 0.03) * 2) - ((widthWindow * 0.07) * 2)) / 3
     };
 
-    let canvas = document.getElementsByTagName("canvas");
-    canvas[0].width = coodsGeneral.maxPositonX;
-    canvas[0].height = coodsGeneral.maxPositonY;
-    context = canvas[0].getContext("2d");    
-    canvas[0].addEventListener("click", onClickCanvas);
+    let canvas = document.getElementById("canvas-tictactoe");
+    canvas.width = coodsGeneral.maxPositonX;
+    canvas.height = coodsGeneral.maxPositonY;
+    context = canvas.getContext("2d");    
+    canvas.addEventListener("click", onClickCanvas);
 
     turno = document.querySelector(".turno");
     scorePlayerX = 0;
@@ -103,6 +103,7 @@ function updateCurrentPlayer() {
 }
 
 function updateTurno(currentPlayer) {
+    console.log(currentPlayer);
     turno.textContent = `Jogador ${currentPlayer}`;
     turno.style.color = currentPlayer === 'X' ? 'blue' : 'red';
 }

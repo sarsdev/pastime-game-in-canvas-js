@@ -1,6 +1,22 @@
-function StartTicTacToe() {
+function StartGame(game) {
     let main = document.getElementsByTagName('main');
-    main[0].innerHTML = "<canvas></canvas>" +
+    switch (game) {
+        case "tictactoe":
+            main[0].innerHTML = getHTMLGameTicTacToe();            
+            StartTicTacToeGame();
+            break;
+        case "snake":
+            main[0].innerHTML = getHTMLGameSnake();
+            StartSnakeGame();
+            break;
+        default:
+            main[0].innerHTML = "<h1>Nenhum jogo encontrado!</h1>";
+            break;
+    }
+}
+
+function getHTMLGameTicTacToe() {
+    return "<canvas id='canvas-tictactoe'></canvas>" +
     "<aside>" +
         "<div class='detalhe'>" +
             "<div>" +
@@ -19,5 +35,8 @@ function StartTicTacToe() {
             "<ul></ul>" +
         "</div>" +
     "</aside>";
-    StartTicTacToeGame();
+}
+
+function getHTMLGameSnake() {
+    return "<canvas id='canvas-snake'></canvas>";
 }

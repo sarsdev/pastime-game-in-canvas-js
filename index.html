@@ -6,21 +6,25 @@
     <title>Pastime Game in Canvas</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="./src/tictactoe/css/tictactoe.css">
+    <link rel="stylesheet" href="./src/snake/css/snake.css">
+    <script defer src="./src/common/js/window-common.js"></script>
     <script defer src="./src/tictactoe/js/rules.js"></script>
     <script defer src="./src/tictactoe/js/calculus.js"></script>
     <script defer src="./src/tictactoe/js/drawing.js"></script>
     <script defer src="./src/tictactoe/js/tictactoe.js"></script>
+    <script defer src="./src/snake/js/snake.js"></script>
     <script defer src="./main.js"></script>
 </head>
 <body>
     <header>
         <h1>Passatempo JS</h1>
         <h3>Jogos desenvolvidos usando Canvas</h3>
-        <button onclick="StartTicTacToe()">Jogo da Velha</button>
+        <button onclick="StartGame('tictactoe')">Jogo da Velha</button>
+        <button onclick="StartGame('snake')">Cobrinha</button>
     </header>
     <main></main>
     <footer>
-        <p>Desenvolvido por SarsDev@2022</p>
+        <p>Desenvolvido por SarsDev@2022-23</p>
     </footer>    
 </body>
 </html>
